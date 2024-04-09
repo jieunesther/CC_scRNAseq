@@ -13,7 +13,7 @@ CC_day1_BC1.txt: 92 animals were processed in two batches (day 1 and day 2). Thi
 
 CC_day2_BC1.txt: 92 animals were processed in two batches (day 1 and day 2). This file is for the samples processed in the second batch (day 2). It contains information about the the BC1 sequence (oligodT and random hexamer) for each animal ID and its well ID. 
 
-fullList_barcode_combination_zylkalab.txt: this file contains all possible combination of barcode sequences (96 BC1 X 96 BC2 X 96 BC3 = 884726; 48 oligodT BC1 and 48 random hex BC1) for each sublibrary. This file is used to filter out any reads with unexpected barcode sequences (if more than 1 bp mismatch exists, the read is excluded). 
+fullList_barcode_combination.txt: this file contains all possible combination of barcode sequences (96 BC1 X 96 BC2 X 96 BC3 = 884726; 48 oligodT BC1 and 48 random hex BC1) for each sublibrary. This file is used to filter out any reads with unexpected barcode sequences (if more than 1 bp mismatch exists, the read is excluded). 
 
 alevin-fry.sh: this is the script for alevin-fry to utilize *.fastq.gz file to generate gene x nucleus matrix. This script was submitted for each of the sublibrary (total 16 sublibrary). This is an example script for sublibrary 1 (S1). 
 
