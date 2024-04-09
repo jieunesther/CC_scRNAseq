@@ -23,4 +23,4 @@ The scRNAseq data was generated using 92 animals from 14 different collaborative
 
 [filter_normalize_merge_dim_reduction_clustering.R](filter_normalize_merge_dim_reduction_clustering.R): this R script is to further filter out low-quality nuclei, SCTransform normalize, merge, run dimension reduction, and clustering. 
 
-
+[CC_GEO_metadata.xlsx](CC_GEO_metadata.xlsx): this excel file is the metadata submitted for the GEO accession # _____. This files include information about the study and experimental design, the list of raw and processed data, methods used for processing the data, and md5checksum for each file. 
