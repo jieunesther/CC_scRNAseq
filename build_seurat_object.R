@@ -12,9 +12,9 @@ library(farver)
 library(usethis)
 library(labeling)
 library(Matrix)
-library(stringdist, lib="/proj/zylkalab/Esther/rpackages")
+library(stringdist)
 library(fishpond)
-library(Seurat, lib.loc = "/nas/longleaf/rhel8/apps/r/4.1.0/lib64/R/library")
+library(Seurat)
 library(SingleCellExperiment)
 
 # Read in zUMIs data
@@ -336,21 +336,3 @@ combined_2 = RenameCells(combined_2,new.names = newNames)
 
 dim(combined_2)
 saveRDS(combined_2,"/proj/zylkalab/Esther/splitseq/Rmd_files/CC_splitseq/output/seurat/alevin-fry_combined2_220316.rds")
-
-
-
-
-
-
-
-# Merge three seurat objects from different splitseq days
-#combined <- merge(combined_1, y=c(combined_2,combined_3), add.cell.ids=c("SD1","SD2","SD3"))
-# Parse out sample metadata to add splitseq day to metadata
-#cnames = colnames(combined)
-#SD = as.character(gsub("(SD[[:digit:]])_(.+)","\\1",cnames,perl=T))
-#sublibrary = combined@meta.data$orig.ident
-
-#combined = AddMetaData(combined,metadata=SD,col.name="splitseq_day")
-#combined = AddMetaData(combined,metadata=sublibrary,col.name="sublibrary")
-#saveRDS(combined,"/proj/zylkalab/Esther/splitseq/SSSC081621/seurat/alevin-fry_combined_220314.rds")
-#combined
