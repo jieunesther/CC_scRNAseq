@@ -18,14 +18,14 @@ library(Seurat)
 library(SingleCellExperiment)
 
 # Read in zUMIs data
-S1 = loadFry(fryDir = "/pine/scr/j/i/jieunp/alevin-fry/CC/S1_counts", outputFormat = "snRNA")
-S2 = loadFry(fryDir = "/pine/scr/j/i/jieunp/alevin-fry/CC/S2_counts", outputFormat = "snRNA")
-S3 = loadFry(fryDir = "/pine/scr/j/i/jieunp/alevin-fry/CC/S3_counts", outputFormat = "snRNA")
-S4 = loadFry(fryDir = "/pine/scr/j/i/jieunp/alevin-fry/CC/S4_counts", outputFormat = "snRNA")
-S5 = loadFry(fryDir = "/pine/scr/j/i/jieunp/alevin-fry/CC/S5_counts", outputFormat = "snRNA")
-S6 = loadFry(fryDir = "/pine/scr/j/i/jieunp/alevin-fry/CC/S6_counts", outputFormat = "snRNA")
-S7 = loadFry(fryDir = "/pine/scr/j/i/jieunp/alevin-fry/CC/S7_counts", outputFormat = "snRNA")
-S8 = loadFry(fryDir = "/pine/scr/j/i/jieunp/alevin-fry/CC/S8_counts", outputFormat = "snRNA")
+S1 = loadFry(fryDir = "/pine/scr/j/i/jieunp/alevin-fry/CC/S1_counts_final", outputFormat = "snRNA")
+S2 = loadFry(fryDir = "/pine/scr/j/i/jieunp/alevin-fry/CC/S2_counts_final", outputFormat = "snRNA")
+S3 = loadFry(fryDir = "/pine/scr/j/i/jieunp/alevin-fry/CC/S3_counts_final", outputFormat = "snRNA")
+S4 = loadFry(fryDir = "/pine/scr/j/i/jieunp/alevin-fry/CC/S4_counts_final", outputFormat = "snRNA")
+S5 = loadFry(fryDir = "/pine/scr/j/i/jieunp/alevin-fry/CC/S5_counts_final", outputFormat = "snRNA")
+S6 = loadFry(fryDir = "/pine/scr/j/i/jieunp/alevin-fry/CC/S6_counts_final", outputFormat = "snRNA")
+S7 = loadFry(fryDir = "/pine/scr/j/i/jieunp/alevin-fry/CC/S7_counts_final", outputFormat = "snRNA")
+S8 = loadFry(fryDir = "/pine/scr/j/i/jieunp/alevin-fry/CC/S8_counts_final", outputFormat = "snRNA")
 
 # Rename cells to include sample number, and divide barcodes
 S1.cnames = gsub(colnames(S1),pattern="([ACTGN]{8})([ACTGN]{8})([ACTGN]{8})",replacement="S1_\\1-\\2-\\3",perl=T)
@@ -127,6 +127,8 @@ dim(S7.seurat)
 dim(S8.seurat)
 
 combined_1 = merge(x=S1.seurat, y=c(S2.seurat,S3.seurat,S4.seurat,S5.seurat,S6.seurat,S7.seurat,S8.seurat))
+combined_1 = subset(combined_1, subset = nCount_RNA > 500 & nFeature_RNA > 250)
+dim(combined_1)
 
 # Look up barcodes (last 8, this orientation) to get sample name
 # Searches for a hamming distance within 1, but for this dataset, it seems to be all exact matches
@@ -160,14 +162,7 @@ for(i in 1:length(ids_l8)) {
 combined_1 = RenameCells(combined_1,new.names = newNames)
 
 dim(combined_1)
-saveRDS(combined_1,"/proj/zylkalab/Esther/splitseq/Rmd_files/CC_splitseq/output/seurat/alevin-fry_combined1_220316.rds")
-combined_1 = readRDS("/proj/zylkalab/Esther/splitseq/Rmd_files/CC_splitseq/output/seurat/alevin-fry_combined1_220316.rds") # 55291 genes, 3280203 nuclei
-combined_1 = subset(combined_1, subset = nCount_RNA > 500 & nFeature_RNA > 250)
-dim(combined_1)# [1]  55291 238428
-combined_1_1 = subset(combined_1, subset = nCount_RNA > 1000 & nFeature_RNA > 500)
-combined_1_2 = subset(combined_1, subset = nCount_RNA > 2000 & nFeature_RNA > 1000)
-dim(combined_1_1) # [1]  55291 193720
-dim(combined_1_2) # [1]  55291 155314
+
 # Parse out sample metadata, drop TRASH cells
 cnames = colnames(combined_1)
 genotype = as.character(gsub("(.+)_(.+)_(.+)_(.+)_(.+)_(.+)_(.+)-(.+)-(.+)","\\1",cnames,perl=T))
@@ -185,17 +180,17 @@ combined_1 = AddMetaData(combined_1,metadata=ampBC,col.name="ampBC")
 combined_1 = AddMetaData(combined_1,metadata=sampleNames,col.name="sampleNames")
 combined_1 = AddMetaData(combined_1,metadata=wellID,col.name="wellID")
 combined_1 = AddMetaData(combined_1,metadata=sublibrary,col.name="sublibrary")
-table(as.data.frame(ampBC_wellID))
+saveRDS(combined_1, "/proj/zylkalab/Esther/splitseq/Rmd_files/CC_splitseq/output/seurat/alevin-fry_combined1_220325.rds")
 
 # Read in zUMIs data
-T1 = loadFry(fryDir = "/pine/scr/j/i/jieunp/alevin-fry/CC/S9_counts", outputFormat = "snRNA")
-T2 = loadFry(fryDir = "/pine/scr/j/i/jieunp/alevin-fry/CC/S10_counts", outputFormat = "snRNA")
-T3 = loadFry(fryDir = "/pine/scr/j/i/jieunp/alevin-fry/CC/S11_counts", outputFormat = "snRNA")
-T4 = loadFry(fryDir = "/pine/scr/j/i/jieunp/alevin-fry/CC/S12_counts", outputFormat = "snRNA")
-T5 = loadFry(fryDir = "/pine/scr/j/i/jieunp/alevin-fry/CC/S13_counts", outputFormat = "snRNA")
-T6 = loadFry(fryDir = "/pine/scr/j/i/jieunp/alevin-fry/CC/S14_counts", outputFormat = "snRNA")
-T7 = loadFry(fryDir = "/pine/scr/j/i/jieunp/alevin-fry/CC/S15_counts", outputFormat = "snRNA")
-T8 = loadFry(fryDir = "/pine/scr/j/i/jieunp/alevin-fry/CC/S16_counts", outputFormat = "snRNA")
+T1 = loadFry(fryDir = "/pine/scr/j/i/jieunp/alevin-fry/CC/S9_counts_final", outputFormat = "snRNA")
+T2 = loadFry(fryDir = "/pine/scr/j/i/jieunp/alevin-fry/CC/S10_counts_final", outputFormat = "snRNA")
+T3 = loadFry(fryDir = "/pine/scr/j/i/jieunp/alevin-fry/CC/S11_counts_final", outputFormat = "snRNA")
+T4 = loadFry(fryDir = "/pine/scr/j/i/jieunp/alevin-fry/CC/S12_counts_final", outputFormat = "snRNA")
+T5 = loadFry(fryDir = "/pine/scr/j/i/jieunp/alevin-fry/CC/S13_counts_final", outputFormat = "snRNA")
+T6 = loadFry(fryDir = "/pine/scr/j/i/jieunp/alevin-fry/CC/S14_counts_final", outputFormat = "snRNA")
+T7 = loadFry(fryDir = "/pine/scr/j/i/jieunp/alevin-fry/CC/S15_counts_final", outputFormat = "snRNA")
+T8 = loadFry(fryDir = "/pine/scr/j/i/jieunp/alevin-fry/CC/S16_counts_final", outputFormat = "snRNA")
 
 # Rename cells to include sample number, and divide barcodes
 T1.cnames = gsub(colnames(T1),pattern="([ACTGN]{8})([ACTGN]{8})([ACTGN]{8})",replacement="T1_\\1-\\2-\\3",perl=T)
@@ -298,11 +293,7 @@ dim(T8.seurat)
 
 combined_2 = merge(x=T1.seurat, y=c(T2.seurat,T3.seurat,T4.seurat,T5.seurat,T6.seurat,T7.seurat,T8.seurat))
 combined_2 = subset(combined_2, subset = nCount_RNA > 500 & nFeature_RNA > 250)
-combined_2_2 = subset(combined_2, subset = nCount_RNA > 1000 & nFeature_RNA > 500)
-combined_2_3 = subset(combined_2, subset = nCount_RNA > 2000 & nFeature_RNA > 1000)
-dim(combined_2) # [1]  55291 235546
-dim(combined_2_2) # [1]  55291 182484
-dim(combined_2_3) # [1]  55291 132692
+
 # Look up barcodes (last 8, this orientation) to get sample name
 # Searches for a hamming distance within 1, but for this dataset, it seems to be all exact matches
 # If no match, cell name will be prepended with "TRASH" for subsequent filtering
@@ -335,4 +326,34 @@ for(i in 1:length(ids_l8)) {
 combined_2 = RenameCells(combined_2,new.names = newNames)
 
 dim(combined_2)
-saveRDS(combined_2,"/proj/zylkalab/Esther/splitseq/Rmd_files/CC_splitseq/output/seurat/alevin-fry_combined2_220316.rds")
+
+
+# Parse out sample metadata, drop TRASH cells
+cnames = colnames(combined_2)
+genotype = as.character(gsub("(.+)_(.+)_(.+)_(.+)_(.+)_(.+)_(.+)-(.+)-(.+)","\\1",cnames,perl=T))
+replicate = as.character(gsub("(.+)_(.+)_(.+)_(.+)_(.+)_(.+)_(.+)-(.+)-(.+)","\\2",cnames,perl=T))
+sex = as.character(gsub("(.+)_(.+)_(.+)_(.+)_(.+)_(.+)_(.+)-(.+)-(.+)","\\3",cnames,perl=T))
+wellID = as.character(gsub("(.+)_(.+)_(.+)_(.+)_(.+)_(.+)_(.+)-(.+)-(.+)","\\4",cnames,perl=T))
+ampBC = as.character(gsub("(.+)_(.+)_(.+)_(.+)_(.+)_(.+)_(.+)-(.+)-(.+)","\\5",cnames,perl=T))
+sublibrary = as.character(gsub("(.+)_(.+)_(.+)_(.+)_(.+)_(.+)_(.+)-(.+)-(.+)","\\6",cnames,perl=T))
+sampleNames = as.character(gsub("(.+)_(.+)_(.+)_(.+)_(.+)_(.+)_(.+)-(.+)-(.+)","\\1_\\2",cnames,perl=T)) 
+
+combined_2 = AddMetaData(combined_2,metadata=genotype,col.name="genotype")
+combined_2 = AddMetaData(combined_2,metadata=replicate,col.name="replicate")
+combined_2 = AddMetaData(combined_2,metadata=sex,col.name="sex")
+combined_2 = AddMetaData(combined_2,metadata=ampBC,col.name="ampBC")
+combined_2 = AddMetaData(combined_2,metadata=sampleNames,col.name="sampleNames")
+combined_2 = AddMetaData(combined_2,metadata=wellID,col.name="wellID")
+combined_2 = AddMetaData(combined_2,metadata=sublibrary,col.name="sublibrary")
+saveRDS(combined_2, "/proj/zylkalab/Esther/splitseq/Rmd_files/CC_splitseq/output/seurat/alevin-fry_combined2_220325.rds")
+
+combined <- merge(combined_1, y = combined_2, add.cell.ids=c("SD1","SD2"))
+cnames = colnames(combined)
+SD = as.character(gsub("(SD[[:digit:]])_(.+)","\\1",cnames,perl=T))
+sublibrary = combined@meta.data$orig.ident
+
+combined = AddMetaData(combined,metadata=SD,col.name="splitseq_day")
+combined = AddMetaData(combined,metadata=sublibrary,col.name="sublibrary")
+
+combined
+saveRDS(combined,"/proj/zylkalab/Esther/splitseq/Rmd_files/CC_splitseq/output/seurat/alevin-fry_combined_filtered_220325.rds")
