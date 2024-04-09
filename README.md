@@ -5,7 +5,9 @@ This repository contains information about the single nucleus RNA sequencing (sn
 The scRNAseq data was generated using 92 animals from 14 different collaborative cross mouse strains to understand the influence of genetic background on brain cell type composition. We used Split Pool Ligation-based Transcriptome sequencing (SPLiT-seq) for generating the snRNAseq data, which utilizes a combinatorial barcoding technique to identify the cellular origin of RNA during snRNAseq analysis. This repository includes metadata, barcode sequences used for SPLiT-seq, scripts to generate the process snRNAseq seurat data (.rds file). 
 
 ## Contents
-Barcodesharing.txt: SPLiT-seq uses 4 sets of barcodes. In this study, the number of barcode sequences for each barcode set is 48 (BC1), 96 (BC2), 96 (BC3) and 16 (BC4; marks each sublibrary). This file contains 48 BC1 oligodT barcodes and 48 BC1 random hexamer barcodes used in the study. Each sample was added into a well that has one oligodT barcode (BC1) and one random hexamer barcode (BC1). This barcode sharing files was used to collapse these two types of barcodes (oligodT and random hexamer).
+Barcode_data.txt: SPLiT-seq uses 4 sets of barcodes. In this study, the number of barcode sequences for each barcode set is 48 (BC1), 96 (BC2), 96 (BC3) and 16 (BC4; marks each sublibrary). This file contains sequences of BC1 (Round 1 v2), BC2 (Round 2 v1), and BC3 (Round 3 v1). 
+
+Barcodesharing.txt: This file contains 48 BC1 oligodT barcodes and 48 BC1 random hexamer barcodes used in the study. Each sample was added into a well that has one oligodT barcode (BC1) and one random hexamer barcode (BC1). This barcode sharing files was used to collapse these two types of barcodes (oligodT and random hexamer).
 
 CC_day1_BC1.txt: 92 animals were processed in two batches (day 1 and day 2). This file is for the samples processed in the first batch (day 1). It contains information about the the BC1 sequence (oligodT and random hexamer) for each animal ID and its well ID. 
 
