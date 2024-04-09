@@ -21,8 +21,6 @@ The scRNAseq data was generated using 92 animals from 14 different collaborative
 
 [build_seurat_object.R](build_seurat_object.R): this R script is to load gene x nucleus matrix into R and generate a seurat object
 
-[filter_seurat_object.R](filter_seurat_object.R): this R script is to filter out low quality nuclei from the data
-
-[normalize_merge_dim_reduction_clustering.R](normalize_merge_dim_reduction_clustering.R): this R script is to SCTransform normalize, merge, run dimension reduction, and clustering. 
+[filter_normalize_merge_dim_reduction_clustering.R](filter_normalize_merge_dim_reduction_clustering.R): this R script is to further filter out low-quality nuclei, SCTransform normalize, merge, run dimension reduction, and clustering. 
 
 
